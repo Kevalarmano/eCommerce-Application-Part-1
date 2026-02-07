@@ -1,0 +1,21 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>Your Cart</h2>
+<ul>
+  {% for it in items %}
+    <li>
+      {{ it.product.name }} x {{ it.qty }} = {{ it.line_total }}
+      <a href="/cart/remove/{{ it.product.id }}/">Remove</a>
+    </li>
+  {% empty %}
+    <li>Cart is empty.</li>
+  {% endfor %}
+</ul>
+<p>Total: {{ total }}</p>
+
+{% if request.user.is_authenticated %}
+  <p><a href="/checkout/">Checkout</a></p>
+{% else %}
+  <p><a href="/login/">Login</a> to checkout.</p>
+{% endif %}
+{% endblock %}

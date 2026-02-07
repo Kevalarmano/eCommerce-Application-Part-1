@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>Vendor Dashboard</h2>
+<p><a href="/vendor/store/create/">Create Store</a></p>
+
+{% for s in stores %}
+  <h3>{{ s.name }}</h3>
+  <p>
+    <a href="/vendor/store/{{ s.id }}/edit/">Edit</a>
+    <a href="/vendor/store/{{ s.id }}/delete/">Delete</a>
+    <a href="/vendor/store/{{ s.id }}/product/create/">Add Product</a>
+  </p>
+  <ul>
+    {% for p in s.products.all %}
+      <li>
+        {{ p.name }} - {{ p.price }} (stock {{ p.stock_qty }})
+        <a href="/vendor/product/{{ p.id }}/edit/">Edit</a>
+        <a href="/vendor/product/{{ p.id }}/delete/">Delete</a>
+      </li>
+    {% empty %}
+      <li>No products yet.</li>
+    {% endfor %}
+  </ul>
+{% empty %}
+  <p>No stores yet.</p>
+{% endfor %}
+{% endblock %}

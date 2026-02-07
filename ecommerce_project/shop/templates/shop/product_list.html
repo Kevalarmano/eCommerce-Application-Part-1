@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>Products</h2>
+<ul>
+  {% for p in products %}
+    <li>
+      <a href="/products/{{ p.id }}/">{{ p.name }}</a>
+      ({{ p.store.name }}) - {{ p.price }}
+      <a href="/cart/add/{{ p.id }}/">Add</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

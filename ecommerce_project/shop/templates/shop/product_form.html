@@ -1,0 +1,21 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>{% if mode == "edit" %}Edit Product{% else %}Create Product{% endif %}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Name</label><br>
+  <input name="name" value="{% if product %}{{ product.name }}{% endif %}"><br>
+  <label>Description</label><br>
+  <textarea name="description">{% if product %}{{ product.description }}{% endif %}</textarea><br>
+  <label>Price</label><br>
+  <input name="price" value="{% if product %}{{ product.price }}{% else %}0{% endif %}"><br>
+  <label>Stock Qty</label><br>
+  <input name="stock_qty" value="{% if product %}{{ product.stock_qty }}{% else %}0{% endif %}"><br>
+  {% if mode == "edit" %}
+    <label>Active</label>
+    <input type="checkbox" name="is_active" {% if product.is_active %}checked{% endif %}>
+  {% endif %}
+  <br><br>
+  <button type="submit">Save</button>
+</form>
+{% endblock %}

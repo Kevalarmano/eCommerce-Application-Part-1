@@ -1,0 +1,32 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>{{ product.name }}</h2>
+<p>Store: {{ product.store.name }}</p>
+<p>{{ product.description }}</p>
+<p>Price: {{ product.price }}</p>
+<p>Stock: {{ product.stock_qty }}</p>
+
+<p><a href="/cart/add/{{ product.id }}/">Add to cart</a></p>
+
+<h3>Reviews</h3>
+<ul>
+  {% for r in reviews %}
+    <li>
+      {{ r.buyer.username }} - {{ r.rating }}/5
+      {% if r.verified %}(Verified){% else %}(Unverified){% endif %}
+      <br>{{ r.comment }}
+    </li>
+  {% empty %}
+    <li>No reviews yet.</li>
+  {% endfor %}
+</ul>
+
+{% if request.user.is_authenticated %}
+<form method="post" action="/review/{{ product.id }}/add/">
+  {% csrf_token %}
+  <label>Rating (1-5)</label><br><input name="rating" value="5"><br>
+  <label>Comment</label><br><textarea name="comment"></textarea><br>
+  <button type="submit">Submit review</button>
+</form>
+{% endif %}
+{% endblock %}
